@@ -4,23 +4,8 @@ import { auth } from "@/auth";
 import Profile from "@/components/profile";
 
 export default async function Home() {
-  const session = await auth();
   return (
-    <div>
-      <form action={actions.signIn}>
-        <Button type="submit">Sign IN</Button>
-      </form>
+    <div>Home Page</div>
 
-      <form action={actions.signOut}>
-        <Button type="submit">Sign OUT</Button>
-      </form>
-
-      {session?.user ? (
-        <div>{JSON.stringify(session.user)}</div>
-      ) : (
-        <div>Signed Out</div>
-      )}
-      <Profile />
-    </div>
-  );
+  )
 }
