@@ -14,7 +14,7 @@ const createTopicSchema = z.object({
     .regex(/^[a-z-]+$/, {
       message: "must be lowercase or dashes without space",
     }),
-  description: z.string().min(10),
+  description: z.string().min(10, { message: "Must contain at least 10 characters" }),
 });
 
 interface CreateTopicFormState {
