@@ -12,11 +12,14 @@ import {
 import FormButton from "../common/form-button";
 
 interface PostCreateFormProps {
-  slug: string
+  slug: string;
 }
 
-function PostCreateForm({slug}: PostCreateFormProps) {
-  const [formState, action] = useFormState(actions.createPost.bind(null,slug), { errors: {} });
+function PostCreateForm({ slug }: PostCreateFormProps) {
+  const [formState, action] = useFormState(
+    actions.createPost.bind(null, slug),
+    { errors: {} }
+  );
   return (
     <Popover placement="left">
       <PopoverTrigger>
@@ -27,6 +30,7 @@ function PostCreateForm({slug}: PostCreateFormProps) {
           <div className="flex flex-col gap-4 p-4 w-80">
             <h3 className="text-lg">Create a post</h3>
             <Input
+              
               isInvalid={!!formState.errors.title}
               errorMessage={formState.errors.title?.join(", ")}
               name="title"
@@ -44,7 +48,9 @@ function PostCreateForm({slug}: PostCreateFormProps) {
             />
 
             {formState.errors._form ? (
-              <div className="text-red-500">{formState.errors._form.join(", ")}</div>
+              <div className="text-red-500">
+                {formState.errors._form.join(", ")}
+              </div>
             ) : null}
             <FormButton>Create Post</FormButton>
           </div>
