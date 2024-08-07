@@ -7,8 +7,13 @@ import { db } from "@/db";
 import paths from "@/paths";
 import { revalidatePath } from "next/cache";
 
-
-import { z } from "zod";
+interface CreateTopicFormState {
+  errors: {
+    name?: string[];
+    description?: string[];
+    _form?: string[];
+  };
+}
 
 const createTopicSchema = z.object({
   name: z
@@ -17,28 +22,10 @@ const createTopicSchema = z.object({
     .regex(/^[a-z-]+$/, {
       message: "must be lowercase or dashes without space",
     }),
-  description: z.string().min(10, { message: "Must contain at least 10 characters" }),
+  description: z
+    .string()
+    .min(10, { message: "Must contain at least 10 characters" }),
 });
-
-
-export async function createTopic(formData: FormData) {
-  const result = createTopicSchema.safeParse({
-    name: formData.get("name"),
-    description: formData.get("description"),
-  });
-
-  if (!result.success) {
-    console.log(result.error.flatten().fieldErrors);
-  }
-
-
-interface CreateTopicFormState {
-  errors: {
-    name?: string[];
-    description?: string[];
-    _form?: string[];
-  };
-}
 
 export async function createTopic(
   formState: CreateTopicFormState,
@@ -92,8 +79,4 @@ export async function createTopic(
 
   revalidatePath("/");
   redirect(paths.topicShow(topic.slug));
-
-  return {
-    errors: {},
-  };
 }
